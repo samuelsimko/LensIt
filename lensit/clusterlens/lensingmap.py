@@ -104,6 +104,9 @@ class cluster_maps(object):
         """
         if field in ['t', 'e', 'b']:
             return self.lib_skyalm.alm2map(self.len_cmbs.unlcmbs.get_sim_alm(idx, field))
+        elif field == 'qu':
+            sim_qulm = self.len_cmbs.unlcmbs.get_sim_qulm(idx)
+            return self.lib_skyalm.alm2map(sim_qulm[0]), self.lib_skyalm.alm2map(sim_qulm[1])
         elif field in ['q', 'u']:
             i = 0 if field =='q' else 1
             return self.lib_skyalm.alm2map(self.len_cmbs.unlcmbs.get_sim_qulm(idx)[i])
@@ -133,6 +136,8 @@ class cluster_maps(object):
             return self.maps_lib.get_sim_qumap(idx)[0]
         elif field =='u':
             return self.maps_lib.get_sim_qumap(idx)[1]
+        elif field == 'qu':
+            return self.maps_lib.get_sim_qumap(idx)[0:2]
         elif field in ['e', 'b']:
             qmap, umap = self.maps_lib.get_sim_qumap(idx)
             qlm = self.lib_datalm.map2alm(qmap)
@@ -141,7 +146,7 @@ class cluster_maps(object):
             if field == 'e':
                 return self.lib_datalm.alm2map(elm)
             elif field == 'b':
-                return self.lib_datalm.alm2map(blm)            
+                return self.lib_datalm.alm2map(blm)
 
     def get_noise_map(self, idx, field='t'):
         """Get the noise map
